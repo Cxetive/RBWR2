@@ -3,6 +3,7 @@ package com.example.rbwr_multi_tool;
 
 
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -25,14 +26,20 @@ class Rank {
 }
 
 public class HelloController implements Initializable {
-    public Button calculatePoints;
+    @FXML
+    protected Button calculatePunten;
+    @FXML
     public Label amountOfPoints;
+    @FXML
     public Label nextRank;
     @FXML
     private Label welcomeText;
 
     @FXML
-    protected void calculatePoints() {
+    private Label aprmValue;
+
+    @FXML
+    public void calculatePunten() {
         Rank[] ranks = {
                 new Rank("Trainee", 1000),
                 new Rank("Worker", 2000),
@@ -46,13 +53,13 @@ public class HelloController implements Initializable {
                 new Rank("Inspector", 1000000),
                 new Rank("Senior Inspector", 2000000),
                 new Rank("Chief Inspector", 5000000)
-        };
 
+        };
 
         int u1Points = (int) u1points.getValue();
         int u2Points = (int) u2points.getValue();
         int amount = u1Points + u2Points;
-        amountOfPoints.setText("you have " + String.valueOf(amount) + " points");
+        amountOfPoints.setText("You have " + amount + " points");
 
         for (Rank rank : ranks) {
             if (amount < rank.amount) {
@@ -65,16 +72,28 @@ public class HelloController implements Initializable {
 
 
     @FXML
-    private Spinner<Integer> U1Points, U2Points;
+    private Spinner<Integer> U1Points, U2Points, MW;
 
-    SpinnerValueFactory<Integer> u1points = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 5000000,1) ;
-    SpinnerValueFactory<Integer> u2points = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 5000000,1) ;
+    static SpinnerValueFactory<Integer> u1points = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,5000000,1);
+
+    static SpinnerValueFactory<Integer> u2points = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 5000000,1) ;
+    static SpinnerValueFactory<Integer> mw = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 5000000,1) ;
     @FXML
+
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         U1Points.setValueFactory(u1points);
         U2Points.setValueFactory(u2points);
+        MW.setValueFactory(mw);
+    }
+
+
+    public void calcAPRM(ActionEvent actionEvent) {
+
+        int sum = (int) ((mw.getValue() + 163 + 42.7) / 14.3);
+        aprmValue.setText(sum +  "%");
     }
 }
